@@ -10,7 +10,10 @@ class AssestsRoutes {
     }
 
     config(): void {
-        this.router.get('/', assetsCtrls.index);
+        this.router.get('/', assetsCtrls.list);
+        this.router.get('/:id', assetsCtrls.search);
+        this.router.post('/', assetsCtrls.create);
+        this.router.put('/:id', assetsCtrls.update);
     }
 }
 

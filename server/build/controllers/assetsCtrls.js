@@ -1,13 +1,18 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const database_1 = __importDefault(require("../database"));
 class AsstesCtrls {
-    index(req, res) {
-        database_1.default.query('SELECT * FROM city');
-        res.send('CRUS');
+    list(req, res) {
+        res.send('list');
+    }
+    search(req, res) {
+        res.send('search');
+    }
+    create(req, res) {
+        res.json({ code: 200, text: 'create' });
+    }
+    update(req, res) {
+        req.params.id;
+        res.json({ code: 200, text: 'update' });
     }
 }
 const asstesCtrls = new AsstesCtrls();

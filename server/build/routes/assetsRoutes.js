@@ -11,7 +11,10 @@ class AssestsRoutes {
         this.config();
     }
     config() {
-        this.router.get('/', assetsCtrls_1.default.index);
+        this.router.get('/', assetsCtrls_1.default.list);
+        this.router.get('/:id', assetsCtrls_1.default.search);
+        this.router.post('/', assetsCtrls_1.default.create);
+        this.router.put('/:id', assetsCtrls_1.default.update);
     }
 }
 const assestsRoutes = new AssestsRoutes();
