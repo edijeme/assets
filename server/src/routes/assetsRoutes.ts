@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import assetsCtrls from '../controllers/assetsCtrls';
 class AssestsRoutes {
 
     public router: Router = Router();
@@ -9,7 +10,10 @@ class AssestsRoutes {
     }
 
     config(): void {
-        this.router.get('/', (req, res) => res.send('AssestsRoutes'));
+        this.router.get('/', assetsCtrls.list);
+        this.router.get('/:id', assetsCtrls.search);
+        this.router.post('/', assetsCtrls.create);
+        this.router.put('/:id', assetsCtrls.update);
     }
 }
 
