@@ -10,18 +10,21 @@ import { AsstesService } from '../../service/asstes.service'
 export class AsstesListComponent implements OnInit {
 
   asstes: any = [];
-
   constructor(private asstesService: AsstesService) { }
 
   ngOnInit() {
     this.asstesService.getAsstes().subscribe(
       res => {
         this.asstes = res;
-        console.log(this.asstes);
+        console.log(this.asstes.data);
         console.log(Object.keys(this.asstes.data).length);
       },
       err => console.error(err)
     )
+  }
+
+  edit(id: string) {
+    console.log(id);
   }
 
 }

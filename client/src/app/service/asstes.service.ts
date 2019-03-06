@@ -12,7 +12,7 @@ export class AsstesService {
   constructor(private http: HttpClient) { }
 
   getAsstes() {
-    return this.http.get(`${this.API_URI}/assets/help`);
+    return this.http.get(`${this.API_URI}/assets/helpone`);
   }
 
   getArea() {

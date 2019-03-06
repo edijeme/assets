@@ -1,5 +1,7 @@
 export interface Assest {
-    data: [];
+    data: any;
+    status: string;
+    statustext: string;
 }
 /*
 idAssets: number;

@@ -1,6 +1,4 @@
 <div class="col-md-12">
-
-
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -13,34 +11,39 @@
         <th scope="col">Peso</th>
         <th scope="col">Alto</th>
         <th scope="col">Ancho</th>
-        <th scope="col">Largo</th>
         <th scope="col">Valor de Compra</th>
         <th scope="col">Fecha de Compra</th>
         <th scope="col">Fecha de Baja</th>
         <th scope="col">Estado Actual</th>
         <th scope="col">Color</th>
+        <th scope="col">Tipo Asignación</th>
         <th scope="col">Asignacion</th>
+        <th scope="col">Acción</th>
       </tr>
     </thead>
     <!--<tbody *ngFor="let data in asstes">-->
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>asd</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
+    <tbody *ngFor="let item of asstes.data;let i=index">
+      <tr #item.idAssets>
+        <th scope="row">{{i+1}}</th>
+        <td>
+          {{item.nameAssets}}
+        </td>
+        <td>{{item.nameAssets}}</td>
+        <td>{{item.descptAssets}}</td>
+        <td>{{item.typeAssets}}</td>
+        <td>{{item.serialAssets}}</td>
+        <td>{{item.internalNumAssets}}</td>
+        <td>{{item.weightAssets}}</td>
+        <td>{{item.heightAssets}}</td>
+        <td>{{item.widthAssets}}</td>
+        <td>{{item.valueBuyAssets}}</td>
+        <td>{{item.dateBuyAssets}}</td>
+        <td>{{item.dateLowAssets}}</td>
+        <td>{{item.nameStatus}}</td>
+        <td>{{item.colourAssets}}</td>
+        <td>{{item.nameTypeAss}}</td>
+        <td>{{item.nameAsig}}</td>
+        <td><button type="button" class="btn btn-warning" (click)="edit(item.idAssets)"> Editar </button> </td>
       </tr>
     </tbody>
   </table>
