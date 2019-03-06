@@ -9,13 +9,18 @@ import { AsstesService } from '../../service/asstes.service'
 })
 export class AsstesListComponent implements OnInit {
 
+  asstes: any = [];
+
   constructor(private asstesService: AsstesService) { }
 
   ngOnInit() {
-    this.asstesService.getPerson().subscribe(
-      res => console.log(res),
-      res => console.error(res),
-
+    this.asstesService.getAsstes().subscribe(
+      res => {
+        this.asstes = res;
+        console.log(this.asstes);
+        console.log(Object.keys(this.asstes.data).length);
+      },
+      err => console.error(err)
     )
   }
 

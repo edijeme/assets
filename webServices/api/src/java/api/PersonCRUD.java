@@ -29,8 +29,8 @@ public class PersonCRUD {
    *
    * @return
    */
-  @WebMethod(operationName = "listPerson")
-  public String listPerson() {
+  @WebMethod(operationName = "listperson")
+  public String listperson() {
     HashMap<Integer, String> person = null;
     HashMap<String, String> out = new HashMap<>();
     JSONObject json = new JSONObject();

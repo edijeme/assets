@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Person } from '../models/Person';
-import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class AsstesService {
 
-  API_URI = 'http://localhost:3000/AssetsCrud.wsdl';
+  API_URI = ' http://localhost:8084/ApiRest/rest';
 
   constructor(private http: HttpClient) { }
 
-  getPerson() {
-    return this.http.get(`${this.API_URI}/listPerson`);
+  getAsstes() {
+    return this.http.get(`${this.API_URI}/assets/help`);
   }
 
   getArea() {

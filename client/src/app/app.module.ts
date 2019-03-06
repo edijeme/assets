@@ -9,13 +9,15 @@ import { AsstesFormComponent } from './components/asstes-form/asstes-form.compon
 import { AsstesListComponent } from './components/asstes-list/asstes-list.component';
 
 import { AsstesService } from './service/asstes.service';
+import { PersonListComponent } from './components/person-list/person-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
     AsstesFormComponent,
-    AsstesListComponent
+    AsstesListComponent,
+    PersonListComponent
   ],
   imports: [
     BrowserModule,
