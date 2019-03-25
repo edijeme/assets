@@ -6,7 +6,7 @@
         <th scope="col">Nombre</th>
         <th scope="col">Descripcion</th>
         <th scope="col">Tipo</th>
-        <th scope="col">Serial </th>
+        <th scope="col">Serial</th>
         <th scope="col">Num. Interno</th>
         <th scope="col">Peso</th>
         <th scope="col">Alto</th>
@@ -25,9 +25,6 @@
     <tbody *ngFor="let item of asstes.data;let i=index">
       <tr #item.idAssets>
         <th scope="row">{{i+1}}</th>
-        <td>
-          {{item.nameAssets}}
-        </td>
         <td>{{item.nameAssets}}</td>
         <td>{{item.descptAssets}}</td>
         <td>{{item.typeAssets}}</td>
@@ -43,8 +40,165 @@
         <td>{{item.colourAssets}}</td>
         <td>{{item.nameTypeAss}}</td>
         <td>{{item.nameAsig}}</td>
-        <td><button type="button" class="btn btn-warning" (click)="edit(item.idAssets)"> Editar </button> </td>
+        <td>
+          <button type="button" title="Editar" class="btn btn-primary" data-toggle="modal" data-target="#mdlEdit"
+            (click)="load(item.idAssets)">
+            <i class="far fa-edit"></i>
+          </button>
+        </td>
+        <td>
+          <button type="button" title="Eliminar" class="btn btn-danger" data-toggle="modal" data-target="#mdlEdit"
+            (click)="edit(item.idAssets)">
+            <i class="far fa-trash-alt"></i>
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
+</div>
+
+<div class="modal fade " id="mdlEdit" tabindex="-1" role="dialog" aria-labelledby="mdlEdit" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Activos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row" *ngFor="let load of loadAss;">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" [(ngModel)]="load.nameAssets" class="form-control" id="txtName" placeholder="Nombre">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Descripción</label>
+                <input type="text" [(ngModel)]="load.descptAssets" class="form-control" id="txtDescrip"
+                  placeholder="Descripción">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Tipo</label>
+                <input type="text" [(ngModel)]="load.typeAssets" class="form-control" id="txtType" placeholder="Tipo">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Serial</label>
+                <input type="text" [(ngModel)]="load.serialAssets" class="form-control" id="txtSerial"
+                  placeholder="Serial">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Num. Interno</label>
+                <input type="text" [(ngModel)]="load.internalNumAssets" class="form-control" id="txtNumInterno"
+                  placeholder="Num. Interno">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Peso</label>
+                <input type="text" [(ngModel)]="load.weightAssets" class="form-control" id="txtWeight"
+                  placeholder="Peso">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Alto</label>
+                <input type="text" [(ngModel)]="load.heightAssets" class="form-control" id="txtHeight"
+                  placeholder="Alto">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Ancho</label>
+                <input type="text" [(ngModel)]="load.widthAssets" class="form-control" id="txtWidth"
+                  placeholder="Ancho">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Valor de Compra</label>
+                <input type="text" [(ngModel)]="load.valueBuyAssets" class="form-control" id="txtValue"
+                  placeholder="Valor de Compra">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Fecha de Compra</label>
+                <input type="date" [(ngModel)]="load.dateBuyAssets" class="form-control" id="dtDateBuy">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Fecha de Baja</label>
+                <input type="date" class="form-control" [(ngModel)]="load.dateLowAssets" id="dtDate">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Estado Actual</label>
+                <select class="form-control">
+                  <option *ngFor="let lstStatus of status;" [value]="lstStatus.id"
+                    [attr.selected]="load.idStatus==lstStatus.id ? true : null">{{lstStatus.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Color</label>
+                <input type="text" [(ngModel)]="load.colourAssets" class="form-control" placeholder="Color">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Tipo Asignación</label>
+                <select #cbxTypeAss class="form-control" (change)="changeTypeAss(cbxTypeAss, areaTmp, personTmp)">
+                  <option *ngFor="let type of typeAssig;" [value]="type.id"
+                    [attr.selected]="load.idTypeAss==type.id ? true : null">{{type.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div *ngIf="load.idTypeAss==1;then areaTmp else personTmp">here is ignored</div>
+            <ng-template #areaTmp>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Área</label>
+                  <select class="form-control">
+                    <option *ngFor="let lstArea of area;" [value]="lstArea.id"
+                      [attr.selected]="load.idAsig==lstArea.id ? true : null">{{lstArea.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #personTmp>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Persona</label>
+                  <select class="form-control">
+                    <option *ngFor="let lstPerson of person;" [value]="lstPerson.id"
+                      [attr.selected]="load.idAsig==lstPerson.id ? true : null">{{lstPerson.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" title="Eliminar" class="btn btn-success" data-toggle="modal" data-target="#mdlEdit"
+          (click)="save()">
+          <i class="far fa-save"></i> Guardar
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times"></i> Cancelar</button>
+      </div>
+    </div>
+  </div>
 </div>
