@@ -12,26 +12,30 @@ export class AsstesService {
   constructor(private http: HttpClient) { }
 
   getAsstes() {
-    return this.http.get(`${this.API_URI}/assets/help`);
-  }
-
-  getArea() {
-    return this.http.get(`${this.API_URI}/area`);
-  }
-
-  getAssets() {
-    return this.http.get(`${this.API_URI}/assest`);
+    return this.http.get(`${this.API_URI}/assets/listassest`);
   }
 
   getSearchAssets(id: string) {
-    return this.http.get(`${this.API_URI}/assest/${id}`);
+    return this.http.get(`${this.API_URI}/assets/getid/${id}`);
+  }
+
+  getTypeAssig() {
+    return this.http.get(`${this.API_URI}/typeassig/`);
+  }
+
+  getArea() {
+    return this.http.get(`${this.API_URI}/area/`);
+  }
+
+  getPerson() {
+    return this.http.get(`${this.API_URI}/person/`);
+  }
+
+  getStatus() {
+    return this.http.get(`${this.API_URI}/status/`);
   }
 
   saveAssets(person: Person) {
     return this.http.post(`${this.API_URI}/area/add`, person);
   }
-  /*
-    upadteAssets(id: string, updateName: Person): Observable<Person> {
-      return this.http.put(`${this.API_URI}/area/${id}`, updateName);
-    }*/
 }
