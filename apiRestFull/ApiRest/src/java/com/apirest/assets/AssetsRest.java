@@ -5,7 +5,8 @@
  */
 package com.apirest.assets;
 
-import com.apirest.config.Mnemonic;
+import com.apirest.config.StringConfig;
+import com.apirest.config.Utils;
 import com.apirest.system.Conexion;
 import com.google.gson.Gson;
 import java.sql.Connection;
@@ -39,7 +40,8 @@ public class AssetsRest {
   public Response listAssest() {
     HashMap<String, Object> out = new HashMap<>();
     JSONObject json = new JSONObject();
-    List<AssetsDto> lst = null;
+    List<AssetsDto> lst = new ArrayList<>();
+    Gson gson = new Gson();
     try {
       JSONObject dtJson = new JSONObject();
       HashMap<Integer, Object> data = new HashMap<>();
@@ -49,14 +51,10 @@ public class AssetsRest {
       ResultSet rs;
       String sql = "CALL getAssets()";
       rs = s.executeQuery(sql);
-      lst = new ArrayList<>();
-      out.put(Mnemonic.STATUS, Response.Status.NOT_FOUND.getStatusCode());
-      out.put(Mnemonic.STATUS_TEXT, Mnemonic.STATUS_TEXT_NOT_FOUND);
-      ResultSetMetaData nameCol = rs.getMetaData();
       AssetsDto dt = null;
+      boolean empty = false;
       while (rs.next()) {
-        out.put(Mnemonic.STATUS, Response.Status.OK.getStatusCode());
-        out.put(Mnemonic.STATUS_TEXT, Mnemonic.STATUS_TEXT_SUCCESS);
+        empty = true;
         dt = new AssetsDto();
         dt.setColourAssets(rs.getString("colourAssets"));
         dt.setDateBuyAssets(rs.getString("dateBuyAssets"));
@@ -79,20 +77,27 @@ public class AssetsRest {
         dt.setWidthAssets(rs.getString("widthAssets"));
         lst.add(dt);
       }
+      if (!empty) {
+        out.put(StringConfig.STATUS, Response.Status.NOT_FOUND.getStatusCode());
+        out.put(StringConfig.STATUS_TEXT, StringConfig.STATUS_TEXT_NOT_FOUND);
+        json.putAll(out);
+        return Utils.status404(json);
+      } else {
+        out.put(StringConfig.STATUS, Response.Status.OK.getStatusCode());
+        out.put(StringConfig.STATUS_TEXT, StringConfig.STATUS_TEXT_SUCCESS);
+      }
       dtJson.putAll(data);
-      Gson gson = new Gson();
-      out.put(Mnemonic.DATA, gson.toJsonTree(lst));
+      out.put(StringConfig.DATA, gson.toJsonTree(lst));
       json.putAll(out);
       con.close();
-    } catch (SQLException ex) {
+    } catch (Exception ex) {
       con.close();
-      out.put(Mnemonic.STATUS, Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
-      out.put(Mnemonic.STATUS_TEXT, ex.getMessage());
+      out.put(StringConfig.STATUS, Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+      out.put(StringConfig.STATUS_TEXT, ex.getMessage());
       json.putAll(out);
+      return Utils.status500(json);
     }
-    return Response.ok(json.toJSONString()).
-            header("Access-Control-Allow-Origin", "*").
-            header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS, HEAD").build();
+    return Utils.status200(json);
   }
 
   @GET
@@ -103,8 +108,6 @@ public class AssetsRest {
     JSONObject json = new JSONObject();
     List<AssetsDto> lst = null;
     try {
-      JSONObject dtJson = new JSONObject();
-      HashMap<Integer, Object> data = new HashMap<>();
       con = new Conexion();
       Connection conex = con.getConnection();
       Statement s = conex.createStatement();
@@ -112,13 +115,10 @@ public class AssetsRest {
       String sql = "CALL getAssestsById('" + id + "')";
       rs = s.executeQuery(sql);
       lst = new ArrayList<>();
-      out.put(Mnemonic.STATUS, Response.Status.NOT_FOUND.getStatusCode());
-      out.put(Mnemonic.STATUS_TEXT, Mnemonic.STATUS_TEXT_NOT_FOUND);
-      ResultSetMetaData nameCol = rs.getMetaData();
+      boolean empty = false;
       AssetsDto dt = null;
       while (rs.next()) {
-        out.put(Mnemonic.STATUS, Response.Status.OK.getStatusCode());
-        out.put(Mnemonic.STATUS_TEXT, Mnemonic.STATUS_TEXT_SUCCESS);
+        empty = true;
         dt = new AssetsDto();
         dt.setColourAssets(rs.getString("colourAssets"));
         dt.setDateBuyAssets(rs.getString("dateBuyAssets"));
@@ -141,20 +141,27 @@ public class AssetsRest {
         dt.setWidthAssets(rs.getString("widthAssets"));
         lst.add(dt);
       }
-      dtJson.putAll(data);
+      if (!empty) {
+        out.put(StringConfig.STATUS, Response.Status.NOT_FOUND.getStatusCode());
+        out.put(StringConfig.STATUS_TEXT, StringConfig.STATUS_TEXT_NOT_FOUND);
+        json.putAll(out);
+        return Utils.status404(json);
+      } else {
+        out.put(StringConfig.STATUS, Response.Status.OK.getStatusCode());
+        out.put(StringConfig.STATUS_TEXT, StringConfig.STATUS_TEXT_SUCCESS);
+      }
       Gson gson = new Gson();
-      out.put(Mnemonic.DATA, gson.toJsonTree(lst));
+      out.put(StringConfig.DATA, gson.toJsonTree(lst));
       json.putAll(out);
       con.close();
     } catch (SQLException ex) {
       con.close();
-      out.put(Mnemonic.STATUS, Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
-      out.put(Mnemonic.STATUS_TEXT, ex.getMessage());
+      out.put(StringConfig.STATUS, Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+      out.put(StringConfig.STATUS_TEXT, ex.getMessage());
       json.putAll(out);
+      return Utils.status500(json);
     }
-    return Response.ok(json.toJSONString()).
-            header("Access-Control-Allow-Origin", "*").
-            header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS, HEAD").build();
+    return Utils.status200(json);
   }
 
 }

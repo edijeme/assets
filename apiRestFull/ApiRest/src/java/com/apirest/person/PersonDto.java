@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.apirest.assets.area;
+package com.apirest.person;
 
 /**
  *
  * @author DyE
  */
-public class AreaDto {
+public class PersonDto {
 
   private int id;
   private String name;

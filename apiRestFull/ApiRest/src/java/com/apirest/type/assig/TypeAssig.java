@@ -5,7 +5,7 @@
  */
 package com.apirest.type.assig;
 
-import com.apirest.config.Mnemonic;
+import com.apirest.config.StringConfig;
 import com.apirest.system.Conexion;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -43,21 +43,21 @@ public class TypeAssig {
       ResultSet rs;
       String sql = "SELECT * FROM typeAssignment";
       rs = s.executeQuery(sql);
-      out.put(Mnemonic.STATUS, Mnemonic.STATUS_NOT_FOUND);
-      out.put(Mnemonic.STATUS_TEXT, Mnemonic.STATUS_TEXT_NOT_FOUND);
+      out.put(StringConfig.STATUS, StringConfig.STATUS_NOT_FOUND);
+      out.put(StringConfig.STATUS_TEXT, StringConfig.STATUS_TEXT_NOT_FOUND);
       while (rs.next()) {
-        out.put(Mnemonic.STATUS, Mnemonic.STATUS_SUCCESS);
-        out.put(Mnemonic.STATUS_TEXT, Mnemonic.STATUS_TEXT_SUCCESS);
+        out.put(StringConfig.STATUS, StringConfig.STATUS_SUCCESS);
+        out.put(StringConfig.STATUS_TEXT, StringConfig.STATUS_TEXT_SUCCESS);
         data.put(rs.getInt("idTypeAss"), rs.getString("nameTypeAss"));
       }
       dtJson.putAll(data);
-      out.put(Mnemonic.DATA, dtJson);
+      out.put(StringConfig.DATA, dtJson);
       json.putAll(out);
       con.close();
     } catch (SQLException ex) {
       con.close();
-      out.put(Mnemonic.STATUS, Mnemonic.STATUS_ERROR);
-      out.put(Mnemonic.STATUS_TEXT, ex.getMessage());
+      out.put(StringConfig.STATUS, StringConfig.STATUS_ERROR);
+      out.put(StringConfig.STATUS_TEXT, ex.getMessage());
       json.putAll(out);
     }
     return Response.ok(json.toJSONString()).

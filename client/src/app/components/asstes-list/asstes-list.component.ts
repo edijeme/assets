@@ -26,57 +26,61 @@ export class AsstesListComponent implements OnInit {
     this.asstesService.getAsstes().subscribe(
       res => {
         this.asstes = res;
+        console.log(res);
       },
-      err => console.error(err)
-    )
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   load(id: string) {
     this.asstesService.getSearchAssets(id).subscribe(
       res => {
+        console.log(res);
         this.resDat = res;
-        if (this.resDat.status == 200) {
+        if (this.resDat.status === 200) {
           this.loadAss = this.resDat.data;
         }
       },
       err => console.error(err)
-    )
+    );
     this.asstesService.getTypeAssig().subscribe(
       res => {
         this.resDat = res;
-        if (this.resDat.status == 200) {
+        if (this.resDat.status === 200) {
           this.typeAssig = this.resDat.data;
         }
       },
       err => console.error(err)
-    )
+    );
     this.asstesService.getArea().subscribe(
       res => {
         this.resDat = res;
-        if (this.resDat.status == 200) {
+        if (this.resDat.status === 200) {
           this.area = this.resDat.data;
         }
       },
       err => console.error(err)
-    )
+    );
     this.asstesService.getPerson().subscribe(
       res => {
         this.resDat = res;
-        if (this.resDat.status == 200) {
+        if (this.resDat.status === 200) {
           this.person = this.resDat.data;
         }
       },
       err => console.error(err)
-    )
+    );
     this.asstesService.getStatus().subscribe(
       res => {
         this.resDat = res;
-        if (this.resDat.status == 200) {
+        if (this.resDat.status === 200) {
           this.status = this.resDat.data;
         }
       },
       err => console.error(err)
-    )
+    );
   }
 
   save() {

@@ -9,7 +9,7 @@ package com.apirest.config;
  *
  * @author DyE
  */
-public interface Mnemonic {
+public interface StringConfig {
 
   final String STATUS_SUCCESS = "200";
   final String STATUS_TEXT_SUCCESS = "success";
