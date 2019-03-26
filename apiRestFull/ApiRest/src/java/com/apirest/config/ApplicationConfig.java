@@ -33,7 +33,6 @@ public class ApplicationConfig extends Application {
         resources.add(com.apirest.assets.AssetsRest.class);
         resources.add(com.apirest.person.PersonRest.class);
         resources.add(com.apirest.status.StatusRest.class);
-        resources.add(com.apirest.type.assig.TypeAssig.class);
         resources.add(com.apirest.typeassignment.TypeAssignmentRest.class);
     }
 

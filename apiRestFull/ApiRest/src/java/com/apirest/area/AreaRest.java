@@ -39,8 +39,6 @@ public class AreaRest {
     JSONObject json = new JSONObject();
     List<AreaDto> lst = null;
     try {
-      JSONObject dtJson = new JSONObject();
-      HashMap<Integer, Object> data = new HashMap<>();
       con = new Conexion();
       Connection conex = con.getConnection();
       Statement s = conex.createStatement();
@@ -66,7 +64,6 @@ public class AreaRest {
         dto.setName(rs.getString("name"));
         lst.add(dto);
       }
-      dtJson.putAll(data);
       Gson gson = new Gson();
       out.put(StringConfig.DATA, gson.toJsonTree(lst));
       json.putAll(out);

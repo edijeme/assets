@@ -6,6 +6,7 @@
 package com.apirest.status;
 
 import com.apirest.config.StringConfig;
+import com.apirest.config.Utils;
 import com.apirest.system.Conexion;
 import com.google.gson.Gson;
 import java.sql.Connection;
@@ -39,8 +40,6 @@ public class StatusRest {
     JSONObject json = new JSONObject();
     List<StatusDto> lst = null;
     try {
-      JSONObject dtJson = new JSONObject();
-      HashMap<Integer, Object> data = new HashMap<>();
       con = new Conexion();
       Connection conex = con.getConnection();
       Statement s = conex.createStatement();
@@ -48,18 +47,24 @@ public class StatusRest {
       String sql = "SELECT idStatus 'id', nameStatus 'name' FROM status";
       rs = s.executeQuery(sql);
       lst = new ArrayList<>();
-      out.put(StringConfig.STATUS, Response.Status.NOT_FOUND.getStatusCode());
-      out.put(StringConfig.STATUS_TEXT, StringConfig.STATUS_TEXT_NOT_FOUND);
+      boolean empty = false;
       StatusDto dto = null;
       while (rs.next()) {
-        out.put(StringConfig.STATUS, Response.Status.OK.getStatusCode());
-        out.put(StringConfig.STATUS_TEXT, StringConfig.STATUS_TEXT_SUCCESS);
+        empty = true;
         dto = new StatusDto();
         dto.setId(rs.getInt("id"));
         dto.setName(rs.getString("name"));
         lst.add(dto);
       }
-      dtJson.putAll(data);
+      if (!empty) {
+        out.put(StringConfig.STATUS, Response.Status.NOT_FOUND.getStatusCode());
+        out.put(StringConfig.STATUS_TEXT, StringConfig.STATUS_TEXT_NOT_FOUND);
+        json.putAll(out);
+        return Utils.status404(json);
+      } else {
+        out.put(StringConfig.STATUS, Response.Status.OK.getStatusCode());
+        out.put(StringConfig.STATUS_TEXT, StringConfig.STATUS_TEXT_SUCCESS);
+      }
       Gson gson = new Gson();
       out.put(StringConfig.DATA, gson.toJsonTree(lst));
       json.putAll(out);
@@ -69,10 +74,9 @@ public class StatusRest {
       out.put(StringConfig.STATUS, Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
       out.put(StringConfig.STATUS_TEXT, ex.getMessage());
       json.putAll(out);
+      return Utils.status500(json);
     }
-    return Response.ok(json.toJSONString()).
-            header("Access-Control-Allow-Origin", "*").
-            header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS, HEAD").build();
+    return Utils.status200(json);
   }
 
 }
