@@ -26,7 +26,6 @@ export class AsstesListComponent implements OnInit {
     this.asstesService.getAsstes().subscribe(
       res => {
         this.asstes = res;
-        console.log(res);
       },
       err => {
         console.log(err);
@@ -37,7 +36,6 @@ export class AsstesListComponent implements OnInit {
   load(id: string) {
     this.asstesService.getSearchAssets(id).subscribe(
       res => {
-        console.log(res);
         this.resDat = res;
         if (this.resDat.status === 200) {
           this.loadAss = this.resDat.data;
@@ -83,14 +81,22 @@ export class AsstesListComponent implements OnInit {
     );
   }
 
-  save() {
-    console.log(this.loadAss);
+  edit() {
+    this.asstesService.editAssets(this.loadAss).subscribe(
+      res => { 
+        this.resDat = res;
+        if (this.resDat.status === 200) {
+          this.status = this.resDat.data;
+        }
+      },
+      err => console.error(err)
+    )
   }
 
   changeTypeAss(changeTypeAss, areaTmp, personTmp) {
     console.log(changeTypeAss);
-    console.log(areaTmp.show);
-    console.log(personTmp);
+    console.log(areaTmp.value);
+    console.log(personTmp.value);
   }
 
 }

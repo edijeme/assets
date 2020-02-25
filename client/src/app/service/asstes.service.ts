@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import { AssestObj } from '../models/AssestObj';
 import { Person } from '../models/Person';
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,11 @@ export class AsstesService {
 
   getStatus() {
     return this.http.get(`${this.API_URI}/status/`);
+  }
+
+  editAssets(ass: AssestObj){
+    console.log("ass"); console.log(ass);
+    return this.http.put(`${this.API_URI}/assets/edit/${JSON.stringify(ass)}`, JSON.stringify(ass));
   }
 
   saveAssets(person: Person) {
